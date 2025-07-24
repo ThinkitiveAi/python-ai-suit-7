@@ -1,0 +1,54 @@
+/* Health First Client Custom Styles */
+
+/* Remove default margin from #root since we're using Material UI */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Healthcare-themed custom styles */
+.medical-icon {
+  color: #2563eb;
+}
+
+.medical-icon-secondary {
+  color: #059669;
+}
+
+/* Custom animations */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Custom scrollbar for the application */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1e4fc7;
+}
