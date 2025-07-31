@@ -1,0 +1,59 @@
+
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8001:8000"
+    environment:
+      - DATABASE_TYPE=postgresql
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/provider_registration
+      - REDIS_URL=redis://redis:6379
+      - DEBUG=true
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+
+    user: "1001:1001"  # Use the appuser's UID/GID to match host user
+
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=provider_registration
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6370:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # Optional: MongoDB service (uncomment if using MongoDB)
+  # mongodb:
+  #   image: mongo:6
+  #   environment:
+  #     - MONGO_INITDB_DATABASE=provider_registration
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodb_data:/data/db
+  #   restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  # mongodb_data: 
